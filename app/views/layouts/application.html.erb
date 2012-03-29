@@ -13,6 +13,7 @@
       </section>
       <footer class="round">
       	<%= render 'layouts/footer' %>
+      	<%= debug(params) if Rails.env.development? %>
       </footer>
     </div>
   </body>
