@@ -101,6 +101,11 @@ render_views
           post :create, :user => @attr
           flash[:success].should  =~ /welcome to sample app/i
       end
+
+      it "should sign the user in" do
+        post :create, :user => @attr
+        controller.should be_signed_in
+      end
     end
 
 
