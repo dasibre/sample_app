@@ -1,4 +1,8 @@
 class UsersController < ApplicationController
+
+  def index
+    @user = User.find :all
+  end
   
   def show
   	@user = User.find(params[:id])
@@ -22,6 +26,23 @@ class UsersController < ApplicationController
   	render 'new'
   	end
   	#redirect_to user_path(@user)
+
+  end
+
+  def edit
+    @user = User.find(params[:id])
+    @title = "Edit account"
+  end
+
+  def update
+    @user = User.find(params[:id])
+    if @user.update_attributes(params[:user])
+      redirect_to @user
+      flash[:success] = "profile updated"
+    else
+    @title = "Edit account"
+    render 'edit'
+  end
 
   end
 
