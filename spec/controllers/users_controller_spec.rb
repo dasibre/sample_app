@@ -177,6 +177,23 @@ render_views
         end
     end
 
+    describe "user authorization" do
+
+        before(:each) do
+          @user = Factory(:user)
+        end
+        it "should deny access to 'edit'" do
+          get :edit, :id => @user
+          response.should redirect_to(signin_path)
+        end
+
+        it "should deny access to 'update'" do
+          put :update, :id => @user, :user => {}
+          response.should redirect_to(signin_path)
+          flash[:notice].should =~ /sign in to access/i
+        end
+    end
+
   end
 
 end

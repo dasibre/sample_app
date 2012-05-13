@@ -1,5 +1,7 @@
 class UsersController < ApplicationController
 
+  before_filter :authenticate, :only => [:edit, :update]
+
   def index
     @user = User.find :all
   end
@@ -44,6 +46,14 @@ class UsersController < ApplicationController
     render 'edit'
   end
 
+  end
+
+
+  private
+
+  def authenticate
+      #flash[:notice] = "Sign in to access page"
+      deny_access unless signed_in?
   end
 
 end

@@ -18,7 +18,7 @@ class SessionsController < ApplicationController
   	#	redirect_to user, :notice => "Logged In"
   	else
   		sign_in user
-      redirect_to user
+      redirect_back_or(user)
       #flash.now[:error] = "Invalid email or password"
   		#@title = 'sign in'
   		#render 'new'
