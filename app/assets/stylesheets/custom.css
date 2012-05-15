@@ -161,7 +161,13 @@ label {
     padding: 5px;
   }
 
-  ul li {
+ul li {
     font-size: 12px;
     list-style: square;
+  }
+  ul.users {
+  margin-top: 1em;
+}
+ul.users li{
+    list-style-type: none;
   }

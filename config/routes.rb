@@ -10,6 +10,8 @@ SampleApp::Application.routes.draw do
   match "/help", :to => "pages#help"
   match "/signin", :to => "sessions#new"
   match "/signout", :to => "sessions#destroy"
+  match "/index", :to => "users#index"
+
 
 
   # The priority is based upon order of creation:
