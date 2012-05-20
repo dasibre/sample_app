@@ -17,7 +17,44 @@ describe "Get 'index'"
 
     before(:each) do
       @user = test_sign_in(Factory(:user))
+      Factory(:user, :email => "another@example.com")
+      Factory(:user, :email => "another@example.net")
+
+      30.times do
+        Factory(:user, :email => Factory.next(:email))
+      end
     end
+
+    it "should have an element for each user" do
+        get :index
+       User.paginate(:page => 1).each do |user|
+          response.should have_selector("li", :content => user.name)
+        end
+      end
+
+      it "should paginate users" do
+        get :index
+        response.should have_selector("div.pagination")
+        response.should have_selector("span.previous_page.disabled", :content => "Previous")
+        response.should have_selector("a", :href => "/users?escape=false&page=2", :content => "2")
+        response.should have_selector("a.next_page", :href => "/users?escape=false&page=2", :content => "Next")
+      end
+
+      it "should have a delete link for admins" do
+        @user.toggle!(:admin)
+        other_user = User.all.second
+        get :index
+        response.should have_selector("a", :href => user_path(other_user),
+                                           :content => "delete")
+      end
+
+      it "should not have delete links for non-admins" do
+        other_user = User.all.second
+        get :index
+        response.should_not have_selector("a", :href => user_path(other_user),
+                                               :content => "delete")
+      end
+
     it "should be successful" do
       get :index
       response.should be_success
@@ -30,7 +67,7 @@ describe "Get 'index'"
 
     it "should have an element for each user" do
       get :index
-      User.all.each do |user|
+      User.paginate(:page => 1).each do |user|
         response.should have_selector('li', :content => user.name)
       end
     end
@@ -246,6 +283,55 @@ describe "Get 'index'"
     end
   end
 
+    describe "Delete 'Destroy' failure" do
+      before(:each) do
+       @user = Factory(:user)
+     end
+
+      describe "as no signed in user" do
+        it "should deny access" do
+         delete :destroy, :id => @user
+         response.should redirect_to(signin_path)
+        end
+      end
+
+      describe "as none adminuser" do
+        it "should only allow admin to delete user" do
+          test_sign_in(@user)
+          delete :destroy, :id => @user
+          response.should redirect_to(root_path)
+        end
+      end
+    
+
+    describe "Delete 'Destroy' Success" do
+
+      before(:each) do
+        @admin = Factory(:user, :email => "admin@example.com", :admin => true)
+        test_sign_in(@admin)
+      end
+
+      it "should destroy user" do
+          lambda do
+          delete :destroy, :id => @user
+          end.should change(User, :count).by(-1) 
+      end
+
+      it "should redirecto to users page" do
+        delete :destroy, :id => @user
+        response.should redirect_to(users_path)
+        flash[:success].should =~ /User deleted/i
+      end
+
+      it "should not be able to destroy itself" do
+        lambda do
+        delete :destroy, :id => @admin
+        end.should_not change(User, :count)
+      end
+
+    end
+    end
   end
+
 
 end
