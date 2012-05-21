@@ -16,6 +16,7 @@ class User < ActiveRecord::Base
 	attr_accessor :password #creates a virtual password attribute
 	attr_accessible :name, :email, :password, :password_confirmation #accessible makes attribute accessible outside of User model
 
+	has_many :microposts
 	email_regex = /\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b/i
 	validates :name, :presence => true, 
 			:length => { :maximum => 50 }
