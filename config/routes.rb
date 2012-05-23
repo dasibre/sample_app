@@ -3,6 +3,7 @@ SampleApp::Application.routes.draw do
   #get "sessions/new"
   resources :sessions, :only => [:new, :create, :destroy]
   resources :users
+  resources :microposts, :only => [:create, :destroy]
   match "/signup", :to => "users#new"
   #get "pages/home"
   match "/contact", :to => "pages#contact"

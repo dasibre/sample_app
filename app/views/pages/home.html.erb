@@ -1,5 +1,20 @@
-<h1>Sample App</h1>
+<% if signed_in? %>
+<table class="home" summary="for signed in users">
+	<tr>
+		<td class="main">
+			<h1 class="micropost">Welcome</h1>
+			<%= render 'shared/microposts' %>
+		</td>
+		<td class="sidebar round">
+			<%= render 'shared/user_info' %>
+		</td>
+	</tr>
+	</table>
+ <% else %>
+<h1>AfRails Web Dev</h1>
 <p>
-This is the home page for the <a href="http://railstutorial.org/">Ruby on Rails tutorial</a> Sample Application
+Welcome to AfRails web development <a href="http:/www.afrails.com">The socially conscious web development company</a>
 </p>
 <%= link_to "Sign up now", signup_path, :class => "signup_button round" %>
+
+<% end %>

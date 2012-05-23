@@ -131,11 +131,12 @@ div.field, div.actions {
   padding: 2px;
   background-color: red;
   display: table; 
+}
   
 label {
     color: #fff;
   }
-}
+
 
 #error_explanation {
   width: 400px;
@@ -144,8 +145,9 @@ label {
   padding-bottom: 12px;
   margin-bottom: 20px;
   background-color: #f0f0f0;
+}
 
-  h2 {
+h2 {
     text-align: left;
     font-weight: bold;
     padding: 5px 5px 5px 15px;

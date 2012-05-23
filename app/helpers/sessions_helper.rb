@@ -27,6 +27,11 @@ module SessionsHelper
 		user == current_user
 	end
 
+	def authenticate
+      #flash[:notice] = "Sign in to access page"
+      deny_access unless signed_in?
+    end
+
 	def deny_access
 		store_location
     	redirect_to signin_path, :notice => "Sign in to access page" 
