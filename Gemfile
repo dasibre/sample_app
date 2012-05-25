@@ -21,7 +21,7 @@ end
 group :development do
 	gem 'rspec-rails', '2.6.1'
 	gem 'annotate', :git => 'git://github.com/ctran/annotate_models.git'
-	gem 'faker', '0.3.1'
+	gem 'faker', '0.3.1', :require => false
 end
 group :test do
 	gem 'rspec-rails', '2.6.1'
