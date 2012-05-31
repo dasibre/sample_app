@@ -4,6 +4,8 @@ SampleApp::Application.configure do
   # Code is not reloaded between requests
   config.cache_classes = true
 
+  #precompile assets
+  config.assets.precompile += %w( *.css *.js )
   # Full error reports are disabled and caching is turned on
   config.consider_all_requests_local       = false
   config.action_controller.perform_caching = true
