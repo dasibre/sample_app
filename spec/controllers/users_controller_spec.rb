@@ -111,7 +111,7 @@ describe "Get 'index'"
                                             :href => user_path(@user))
     end
 
-    it "should show the user's micropost" do
+    it "should show the user's microposts" do
       mp1 = Factory(:micropost, :user => @user, :content => "foo bar")
       mp2 = Factory(:micropost, :user => @user, :content => "Baz bar")
       get :show, :id => @user
