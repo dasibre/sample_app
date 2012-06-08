@@ -33,6 +33,8 @@ class User < ActiveRecord::Base
 			  :confirmation => true, :length => { :within => 6..20 }
 
 	before_save :encrypt_password
+
+	scope :admin, where(:admin => true)
 	 
 	 #compares encrypted_password attribute with submitted password
 	 def has_password?(submitted_password)
@@ -40,7 +42,7 @@ class User < ActiveRecord::Base
 	 end
 
 	 def feed
-	 	Micropost.where("user_id = ?", id)
+	 	Micropost.from_users_followed_by(self)
 	 end
 	  
 	  def following?(followed)
